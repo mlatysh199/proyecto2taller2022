@@ -39,8 +39,7 @@ def recortarPiezaAux(pieza, foc):
 		j = 0
 		while j < longitudverti and noaparecio:
 			if foc:
-				if pieza[i][j]:
-					noaparecio = False
+				noaparecio = not pieza[i][j]
 			elif pieza[j][i]:
 				noaparecio = False
 			j += 1
