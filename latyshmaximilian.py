@@ -6,16 +6,9 @@ sys.setrecursionlimit((1 << 31) - 1)
 
 #Cada pieza tiene 8 rotaciones
 
-#Pueden haber piezas invalidas.
-
-
-def recibirPieza():
-	pieza, simbolo = convertirPieza()
-	recortarPieza(pieza)
-	return [pieza, simbolo]
+#Pueden haber piezas invalidas
 	
 	
-
 def convertirPieza():
 	simbolo = False
 	pieza = []
@@ -57,6 +50,12 @@ def recortarPiezaAux(pieza, foc):
 def recortarPieza(pieza):
 	recortarPiezaAux(pieza, True)
 	recortarPiezaAux(pieza, False)
+
+
+def recibirPieza():
+	pieza, simbolo = convertirPieza()
+	recortarPieza(pieza)
+	return [pieza, simbolo]
 
 
 if __name__ == "__main__":
