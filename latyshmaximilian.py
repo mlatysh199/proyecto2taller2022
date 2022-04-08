@@ -38,3 +38,5 @@ if __name__ == "__main__":
 	piezas = [recibirPieza() for i in range(info[2])]
 	for i in piezas:
 		print(i)
+
+# Keylor se la come
