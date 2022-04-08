@@ -31,10 +31,11 @@ def recibirPieza():
 		else:
 			contador += 1
 	return [simbolo, pieza]
-
+#Ariel es gay
 
 if __name__ == "__main__":
 	info = [int(i) for i in input().split(" ")]
 	piezas = [recibirPieza() for i in range(info[2])]
 	for i in piezas:
 		print(i)
+
