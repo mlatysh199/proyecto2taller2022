@@ -33,9 +33,6 @@ def recibirPieza():
 	return [simbolo, pieza]
 
 
-# ? esValido()
-
-
 if __name__ == "__main__":
 	info = [int(i) for i in input().split(" ")]
 	piezas = [recibirPieza() for i in range(info[2])]
