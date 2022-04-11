@@ -19,51 +19,39 @@ def convertirPedazo():
 			pedazo[i] = ord(pedazo[i])
 	return pedazo
 
-	
-def recortarPiezaAuxUp(pieza, foc):
-	longitudhoriz = len(pieza[0])*(not foc) + len(pieza)*foc
+
+# foc es "fila o cola"
+# dou es "down o up"
+def recortarPiezaAux(pieza, foc, dou):
+	longitudhoriz = len(pieza[0])*(not foc) + len(pieza)*foc - dou
 	longitudverti = len(pieza[0])*(foc) + len(pieza)*(not foc)
 	noaparecio = True
-	while 0 < longitudhoriz and noaparecio:
-		j = 0
-		while j < longitudverti and noaparecio:
+	i = 0
+	while i < longitudverti and noaparecio:
+		if foc:
+			noaparecio = not pieza[dou*longitudhoriz][i]
+		elif pieza[i][dou*longitudhoriz]:
+			noaparecio = False
+		i += 1
+	while longitudhoriz + dou and noaparecio:
+		if foc:
+			pieza.pop(dou*longitudhoriz)
+		else:
+			for j in range(longitudverti):
+				pieza[j].pop(dou*longitudhoriz)
+		longitudhoriz -= 1
+		noaparecio = bool(longitudhoriz + dou)
+		i = 0
+		while i < longitudverti and noaparecio:
 			if foc:
-				noaparecio = not pieza[0][j]
-			elif pieza[j][0]:
+				noaparecio = not pieza[dou*longitudhoriz][i]
+			elif pieza[i][dou*longitudhoriz]:
 				noaparecio = False
-			j += 1
-		if noaparecio:
-			if foc:
-				pieza.pop(0)
-			else:
-				for j in range(longitudverti):
-					pieza[j].pop(0)
-			longitudhoriz -= 1
+			i += 1
 
 
-def recortarPiezaAuxDown(pieza, foc):
-	longitudhoriz = len(pieza[0])*(not foc) + len(pieza)*foc
-	longitudverti = len(pieza[0])*(foc) + len(pieza)*(not foc)
-	i = longitudhoriz - 1
-	noaparecio = True
-	while i >= 0 and noaparecio:
-		j = 0
-		while j < longitudverti and noaparecio:
-			if foc:
-				noaparecio = not pieza[i][j]
-			elif pieza[j][i]:
-				noaparecio = False
-			j += 1
-		if noaparecio:
-			if foc:
-				pieza.pop()
-			else:
-				for j in range(longitudverti):
-					pieza[j].pop()
-			i -= 1
-
-# Nota: Ocupamos dos métodos separados porque una funciona para recortar
-# - desde arriba hasta abajo y la otra de abajo hasta arriba. Se necesita
+# Nota: Ocupamos un método separado porque funciona para recortar
+# - desde arriba hasta abajo y de abajo hasta arriba. Se necesita
 # - hacer ambos procesos como no se puede recortar un espacio que
 # - define la proporción de una pieza. Por ejemplo: 
 # - $$$$
@@ -73,10 +61,10 @@ def recortarPiezaAuxDown(pieza, foc):
 # - Obviamente no se puede recortar la segunda fila como esto dañaría
 # - la proporción de la pieza.
 def recortarPieza(pieza):
-	recortarPiezaAuxUp(pieza, True)
-	recortarPiezaAuxDown(pieza, True)
-	recortarPiezaAuxUp(pieza, False)
-	recortarPiezaAuxDown(pieza, False)
+	recortarPiezaAux(pieza, True, True)
+	recortarPiezaAux(pieza, True, False)
+	recortarPiezaAux(pieza, False, True)
+	recortarPiezaAux(pieza, False, False)
 
 
 def recibirPieza():
