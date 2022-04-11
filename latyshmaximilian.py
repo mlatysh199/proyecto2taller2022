@@ -71,11 +71,16 @@ def recibirPieza():
 
 # Tenemos que asegurarnos de que si la pieza es válida tomando la suma
 # - total de todas las piezas y viendo si es igual a las dimensiones.
-def tamanoPieza(pieza):
+def tamanoMatriz(matriz):
 	tamano = 0
-	for pedazo in pieza:
-		for i in pedazo:
+	for fila in matriz:
+		for i in fila:
 			tamano += i > 0
+	return tamano
+
+
+def tieneBuenaEsquina(pieza):
+	return pieza[0][0]
 
 
 if __name__ == "__main__":
