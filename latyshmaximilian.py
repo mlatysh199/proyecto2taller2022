@@ -24,14 +24,13 @@ def convertirPedazo():
 # dou es "down o up"
 def recortarPiezaAux(pieza, foc, dou):
 	longitudhoriz = len(pieza[0])*(not foc) + len(pieza)*foc - dou
-	longitudverti = len(pieza[0])*(foc) + len(pieza)*(not foc)
+	longitudverti = len(pieza[0])*foc + len(pieza)*(not foc)
 	noaparecio = True
 	i = 0
 	while i < longitudverti and noaparecio:
-		if foc:
-			noaparecio = not pieza[dou*longitudhoriz][i]
-		elif pieza[i][dou*longitudhoriz]:
-			noaparecio = False
+		# que???
+		# Se reemplazan los ifs para promover eficiencia.
+		noaparecio = not pieza[(not foc)*i + foc*dou*longitudhoriz][foc*i + (not foc)*dou*longitudhoriz]
 		i += 1
 	while longitudhoriz + dou and noaparecio:
 		if foc:
@@ -43,10 +42,7 @@ def recortarPiezaAux(pieza, foc, dou):
 		noaparecio = bool(longitudhoriz + dou)
 		i = 0
 		while i < longitudverti and noaparecio:
-			if foc:
-				noaparecio = not pieza[dou*longitudhoriz][i]
-			elif pieza[i][dou*longitudhoriz]:
-				noaparecio = False
+			noaparecio = not pieza[(not foc)*i + foc*dou*longitudhoriz][foc*i + (not foc)*dou*longitudhoriz]
 			i += 1
 
 
