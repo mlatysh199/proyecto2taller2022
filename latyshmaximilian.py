@@ -97,7 +97,8 @@ def rotacion90(pieza):
 
 
 # Antonio y Ariel
-def rotacionInvertir(pieza)
+def rotacionInvertir(pieza):
+	pass
 
 
 # Antonio y Ariel
@@ -112,9 +113,9 @@ def esSolucion(mesa):
 	return tamanoMatriz(mesa) == len(mesa)*len(mesa[0])
 
 
-def encontrarPrimeroDisponible(mesa, inicio):
-	for i in range(inicio[0]*0, len(mesa)):
-		for j in range(inicio[1]*0, len(mesa[0])):
+def encontrarPrimeroDisponible(mesa):
+	for i in range(0, len(mesa)):
+		for j in range(0, len(mesa[0])):
 			if not mesa[i][j]:
 				return [i, j]
 
@@ -154,21 +155,21 @@ def intentarMeterPieza(mesa, pieza, posicionref, desplazamiento):
 
 def encontrarHijos(madre, piezas):
 	hijos = []
-	posicionref = encontrarPrimeroDisponible(madre[0], madre[1])
+	posicionref = encontrarPrimeroDisponible(madre[0])
 	for i in piezas:
-		if id(i) not in madre[2]:
+		if id(i) not in madre[1]:
 			for j in rotaciones[id(i)]:
 				# madre[0].copy() no funciona para el caso dado.
 				intento = intentarMeterPieza(clonarMatriz(madre[0]), j, posicionref, encontrarDesplazamiento(j))
 				if intento:
-					hijos.append([intento, posicionref, madre[2]+[id(i)]])
+					hijos.append([intento, madre[1]+[id(i)]])
 	return hijos
 
 
 def pila(piezas, L, A):
 	# Se hubiera utilizado [[False]*A]*L pero este crea fuerzas spooky entre
 	# - elementos que no se deberian relacionarse.
-	pila = [[[[False for j in range(A)] for i in range(L)]] + [[0, 0], []]]
+	pila = [[[[False for j in range(A)] for i in range(L)]] + [[]]]
 	while pila:
 		ultimo = pila.pop()
 		if esSolucion(ultimo[0]):
