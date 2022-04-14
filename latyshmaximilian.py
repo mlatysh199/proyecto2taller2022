@@ -217,7 +217,7 @@ def encontrarHijos(madre, piezas):
 				# madre[0].copy() no funciona para el caso dado.
 				intento = intentarMeterPieza(clonarMatriz(madre[0]), j, posicionref, encontrarDesplazamiento(j))
 				if intento:
-					hijos.append([intento, madre[1]+[i]])
+					hijos.append([intento, madre[1] + [i]])
 	return hijos
 
 
