@@ -128,6 +128,7 @@ def rotacion90(pieza):
 # Codominio: 
 # Antonio y Ariel
 def rotacionInvertir(pieza):
+	# [[1, 2, 3]] -> [[3, 2, 1]]
 	pass
 
 
@@ -139,7 +140,10 @@ def rotacionInvertir(pieza):
 # - pieza se tiene que guardar sus respectivas rotaciones NO repetetidas.
 # Nota: Las piezas son guardadas de forma ordenada.
 def crearRotaciones(piezas):
-	pass
+	# temporal
+	for i in piezas:
+		subrotaciones = [i]
+		rotaciones.append(subrotaciones)
 
 
 # Explicación: Determina si un estado es una solución.
@@ -157,6 +161,7 @@ def encontrarPrimeroDisponible(mesa):
 		for j in range(0, len(mesa[0])):
 			if not mesa[i][j]:
 				return [i, j]
+	return [-1, -1]
 
 
 # Explicación: Encuentra la posición respectiva del primer valor que no
@@ -211,7 +216,9 @@ def intentarMeterPieza(mesa, pieza, posicionref, desplazamiento):
 def encontrarHijos(madre, piezas):
 	hijos = []
 	posicionref = encontrarPrimeroDisponible(madre[0])
-	for i in range(piezas):
+	if not (posicionref[0] + 1):
+		return hijos
+	for i in range(len(piezas)):
 		if i not in madre[1]:
 			for j in rotaciones[i]:
 				# madre[0].copy() no funciona para el caso dado.
@@ -229,7 +236,7 @@ def encontrarHijos(madre, piezas):
 def pila(piezas, L, A):
 	# Se hubiera utilizado [[False]*A]*L pero este crea fuerzas spooky entre
 	# - elementos que no se deberian relacionarse.
-	pila = [[[[False for j in range(A)] for i in range(L)]] + [[]]]
+	pila = [[[[False]*A for i in range(L)], []]]
 	while pila:
 		ultimo = pila.pop()
 		if esSolucion(ultimo[0]):
@@ -237,12 +244,12 @@ def pila(piezas, L, A):
 		pila = pila + encontrarHijos(ultimo, piezas)
 
 
-# Explicación: 
-# Dominio: 
-# Codominio: 
-# Ariel
+# Explicación: Imprime una matriz recibida aplicando chr.
+# Dominio: Una matriz con valores ASCII.
+# Codominio: Vacio (imprime la matriz.)
 def imprimirMatriz(matriz):
-	pass
+	for i in matriz:
+		print(*map(chr, i), sep = "")
 	
 
 # Explicación: Función principal que activa el programa.
@@ -251,12 +258,12 @@ def imprimirMatriz(matriz):
 def main():
 	info = [int(i) for i in input().split(" ")]
 	piezas = [recibirPieza() for i in range(info[2])]
-	for i in piezas:
-		imprimirMatriz(i)
-		print()
+	#for i in piezas:
+	#	imprimirMatriz(i)
+	#	print()
 	if not esPosible(piezas, info[0], info[1]):
 		print("No hay respuesta!")
-		quit()
+		return
 	crearRotaciones(piezas)
 	resultado = pila(piezas, info[0], info[1])
 	if resultado:
