@@ -118,31 +118,50 @@ def esPosible(piezas, L, A):
 # Explicación: 
 # Dominio: 
 # Codominio: 
-# Antonio y Ariel
-def rotacion90(pieza):
-	pass
+def rotacion90(matriz):
+    matriz_nueva = [[] for i in range(len(matriz[0]))]
+    for i in range(len(matriz[0])):
+        for j in range(len(matriz)):
+            matriz_nueva[i].append(matriz[-j-1][i])
+    return matriz_nueva
 
 
 # Explicación: 
 # Dominio: 
 # Codominio: 
-# Antonio y Ariel
-def rotacionInvertir(pieza):
-	# [[1, 2, 3]] -> [[3, 2, 1]]
-	pass
+def rotacionFlip(matriz):
+    matriz_nueva = [[] for i in range(len(matriz))]
+    for i in range(len(matriz)):
+        for j in range(len(matriz[0])):
+            matriz_nueva[i].append(matriz[i][-j-1])
+    return matriz_nueva
 
 
 # Explicación: 
 # Dominio: 
 # Codominio: 
-# Antonio y Ariel
 # Tiene que modificar la lista "rotaciones". Es decir, para cada
 # - pieza se tiene que guardar sus respectivas rotaciones NO repetetidas.
 # Nota: Las piezas son guardadas de forma ordenada.
 def crearRotaciones(piezas):
-	# temporal
 	for i in piezas:
 		subrotaciones = [i]
+		intento = rotacionFlip(i)
+		if intento not in subrotaciones:
+			subrotaciones.append(intento)
+		previo90 = rotacion90(i)
+		if previo90 not in subrotaciones:
+			subrotaciones.append(previo90)
+		previoflip = rotacionFlip(previo90)
+		if previoflip not in subrotaciones:
+			subrotaciones.append(previoflip)
+		for i in range(3):
+			previo90 = rotacion90(previo90)
+			if previo90 not in subrotaciones:
+				subrotaciones.append(previo90)
+			previoflip = rotacionFlip(previo90)
+			if previoflip not in subrotaciones:
+				subrotaciones.append(previoflip)
 		rotaciones.append(subrotaciones)
 
 
