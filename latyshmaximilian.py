@@ -7,6 +7,14 @@
 #import sys
 #sys.setrecursionlimit((1 << 31) - 1)
 
+# Se necesita el archivo "interfaz.py" en la misma carpeta
+INTERFAZ = False
+try:
+	import interfaz
+	INTERFAZ = True
+except ModuleNotFoundError as e:
+	print("(!!!) No se logró encontrar el archivo interfaz.py.")
+
 
 # Lista que guarda las rotaciones de cada pieza en forma ordenada en una sublista.
 # Se asume que cada pieza tiene 8 rotaciones.
@@ -115,33 +123,32 @@ def esPosible(piezas, L, A):
 	return total >= L*A and L > 0 and A > 0
 
 
-# Explicación: 
-# Dominio: 
-# Codominio: 
+# Explicación: Crea una rotación de 90 grados de una matriz dada.
+# Dominio: Una matriz.
+# Codominio: Una matriz.
 def rotacion90(matriz):
     matriz_nueva = [[] for i in range(len(matriz[0]))]
     for i in range(len(matriz[0])):
         for j in range(len(matriz)):
-            matriz_nueva[i].append(matriz[-j-1][i])
+            matriz_nueva[i].append(matriz[-j - 1][i])
     return matriz_nueva
 
 
-# Explicación: 
-# Dominio: 
-# Codominio: 
+# Explicación: Crea la reversa de una matriz dada.
+# Dominio: Una matriz.
+# Codominio: Una matriz.
 def rotacionFlip(matriz):
     matriz_nueva = [[] for i in range(len(matriz))]
     for i in range(len(matriz)):
         for j in range(len(matriz[0])):
-            matriz_nueva[i].append(matriz[i][-j-1])
+            matriz_nueva[i].append(matriz[i][-j - 1])
     return matriz_nueva
 
 
-# Explicación: 
-# Dominio: 
-# Codominio: 
-# Tiene que modificar la lista "rotaciones". Es decir, para cada
-# - pieza se tiene que guardar sus respectivas rotaciones NO repetetidas.
+# Explicación: Crea todas las rotaciones que no se repitan. Al máximo,
+# - pueden haber 8; mínimo, 1.
+# Dominio: Un arreglo de matrices.
+# Codominio: Vacío (modifica la lista rotaciones).
 # Nota: Las piezas son guardadas de forma ordenada.
 def crearRotaciones(piezas):
 	for i in piezas:
@@ -277,9 +284,6 @@ def imprimirMatriz(matriz):
 def main():
 	info = [int(i) for i in input().split(" ")]
 	piezas = [recibirPieza() for i in range(info[2])]
-	#for i in piezas:
-	#	imprimirMatriz(i)
-	#	print()
 	if not esPosible(piezas, info[0], info[1]):
 		print("No hay respuesta!")
 		return
@@ -287,8 +291,10 @@ def main():
 	resultado = pila(piezas, info[0], info[1])
 	if resultado:
 		imprimirMatriz(resultado)
-	else:
-		print("No hay respuesta!")
+		if INTERFAZ:
+			interfaz.gameLoop(resultado)
+		return
+	print("No hay respuesta!")
 
 
 if __name__ == "__main__":
