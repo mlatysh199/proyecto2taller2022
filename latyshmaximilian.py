@@ -1,12 +1,4 @@
-# Para este proyecto no fue empleada la recursion en si. Por lo
-# - tanto, no se considera necesario establecer el limite de
-# - recursion.
-# Importamos a la biblioteca sys y con este definimos el limite de 
-# - recursión como 2^31-1 dado que este es el límite de recursión
-# - más grande en python.
-#import sys
-#sys.setrecursionlimit((1 << 31) - 1)
-
+# Explicacion: Para la interfaz gráfica para mostrar la solución SI HAY.
 # Se necesita el archivo "interfaz.py" en la misma carpeta
 INTERFAZ = False
 try:
@@ -16,8 +8,8 @@ except ModuleNotFoundError as e:
 	print("(!!!) No se logró encontrar el archivo interfaz.py.")
 
 
-# Lista que guarda las rotaciones de cada pieza en forma ordenada en una sublista.
-# Se asume que cada pieza tiene 8 rotaciones.
+# Explicación: Lista que guarda las rotaciones de cada pieza en forma ordenada en una sublista.
+# - Se asume que cada pieza tiene 8 rotaciones.
 rotaciones = []
 
 
@@ -43,15 +35,14 @@ def convertirPedazo():
 # - que determinan el modo.
 # Codominio: Vacío (cambia la pieza en sí).
 # Nota: Funciona incluso para piezas disconexas...
-# foc es "fila o columna"
-# dou es "down o up"
+# - foc es "fila o columna"
+# - dou es "down o up"
 def recortarPiezaAux(pieza, foc, dou):
 	longitudhoriz = len(pieza[0])*(not foc) + len(pieza)*foc - dou
 	longitudverti = len(pieza[0])*foc + len(pieza)*(not foc)
 	noaparecio = True
 	i = 0
 	while i < longitudverti and noaparecio:
-		# que???
 		# Se reemplazan los ifs para promover eficiencia.
 		noaparecio = not pieza[(not foc)*i + foc*dou*longitudhoriz][foc*i + (not foc)*dou*longitudhoriz]
 		i += 1
@@ -192,7 +183,7 @@ def encontrarPrimeroDisponible(mesa):
 
 # Explicación: Encuentra la posición respectiva del primer valor que no
 # - sea Falso en la primera fila de una rotación dada de una pieza.
-# Dominio: Una matrizde valores numéricos representante de una rotación
+# Dominio: Una matriz de valores numéricos representante de una rotación
 # - dada de una pieza.
 # Codominio: Un valor natural (aunque tomando en cuentra las limitaciones
 # - del enunciado del proyecto se puede decir que es de 0 a 3).
@@ -256,7 +247,7 @@ def encontrarHijos(madre, piezas):
 
 # Explicación: El solucionador del katamino a principio de la pila.
 # Dominio: Una lista de matrices representantes de las piezas de katamino
-# - y dos números naturales 
+# - y dos números naturales.
 # Codominio: None si no hay solución y sino una matriz de valores naturales
 # - representante de la solución.
 def pila(piezas, L, A):
@@ -272,7 +263,7 @@ def pila(piezas, L, A):
 
 # Explicación: Imprime una matriz recibida aplicando chr.
 # Dominio: Una matriz con valores ASCII.
-# Codominio: Vacio (imprime la matriz.)
+# Codominio: Vacio (imprime la matriz).
 def imprimirMatriz(matriz):
 	for i in matriz:
 		print(*map(chr, i), sep = "")
