@@ -1,11 +1,17 @@
-# Explicacion: Para la interfaz gráfica para mostrar la solución SI HAY.
-# Se necesita el archivo "interfaz.py" en la misma carpeta
+# Se necesita sys para ver los parametros de ejecución.
+import sys
+argumentos = sys.argv[1:]
+
+print("-> Para activar la interfaz gráfica, agregue el paramentro '-I' o '--INTERFAZ'.")
+
+# Se ocupa el archivo "interfaz.py" en la misma carpeta.
 INTERFAZ = False
-try:
-	import interfaz
-	INTERFAZ = True
-except ModuleNotFoundError as e:
-	print("(!!!) No se logró encontrar el archivo interfaz.py.")
+if "-I" in argumentos or "--INTERFAZ" in argumentos:
+	try:
+		import interfaz
+		INTERFAZ = True
+	except ModuleNotFoundError as e:
+		print("-> (!!!) No se logró encontrar el archivo interfaz.py o la biblioteca de pygame.")
 
 
 # Explicación: Lista que guarda las rotaciones de cada pieza en forma ordenada en una sublista.
@@ -276,16 +282,17 @@ def main():
 	info = [int(i) for i in input().split(" ")]
 	piezas = [recibirPieza() for i in range(info[2])]
 	if not esPosible(piezas, info[0], info[1]):
-		print("No hay respuesta!")
+		print("-> No hay respuesta!")
 		return
 	crearRotaciones(piezas)
 	resultado = pila(piezas, info[0], info[1])
 	if resultado:
+		print("-> Se encontró una respuesta!")
 		imprimirMatriz(resultado)
 		if INTERFAZ:
 			interfaz.gameLoop(resultado)
 		return
-	print("No hay respuesta!")
+	print("-> No hay respuesta!")
 
 
 if __name__ == "__main__":
