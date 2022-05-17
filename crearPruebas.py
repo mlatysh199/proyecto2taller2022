@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import randint, choice, shuffle
 
 
 def matrizVacia(n, m, que):
@@ -92,6 +92,7 @@ def generarPieza(matriz, modos, posf, posc, cantidad):
 def guardar(n, m, piezas):
 	with open("input.txt", "w") as file:
 		file.write(f"{n} {m} {len(piezas)}" + "\n")
+		shuffle(piezas)
 		for i in piezas:
 			for j in i:
 				file.write("".join(j) + "\n")
