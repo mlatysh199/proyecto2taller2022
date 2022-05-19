@@ -43,10 +43,10 @@ def gameLoop(matriz):
     # ----
     # Más colores.
     colores = []
-    for i in range(32, 127):
+    for i in range(32, 687):
         color = (randint(50, 255), randint(50, 255), randint(50, 255))
         while color in colores:
-            color = (randint(3, 12)*20 + 15, randint(3, 12)*20 + 15, randint(3, 12)*20 + 15)
+            color = (randint(6, 24)*10 + 15, randint(6, 24)*10 + 15, randint(6, 24)*10 + 15)
         colores.append(color)
     run = True
     # Para el posicionamiento correcto del texto.
